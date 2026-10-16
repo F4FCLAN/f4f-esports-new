@@ -151,7 +151,7 @@ async function loadCountdown() {
         <thead><tr><th>Tarih</th><th>Saat</th><th>Rakip klan</th></tr></thead>
         <tbody>${upcoming.map(m => `
           <tr>
-            <td>${safe(m.match_date)}</td>
+           <td>${safe(m.match_date ? String(m.match_date).slice(0,10).split('-').reverse().join('.') : '—')}</td>
             <td>${safe(m.match_time || '20:00')}</td>
             <td><b>F4F vs ${safe(m.rival_clan)}</b></td>
           </tr>`).join('')}
