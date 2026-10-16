@@ -1,7 +1,5 @@
-# F4F Esports — Profesyonel Tasarım Taslağı
+# F4F Esports — Fight For Freedom
 
-Kırmızı/gümüş çerçeve arka planı ve daha önce onaylanan metalik F4F amblemi dosyalara eklenmiştir. Arka plan HTML tarafından otomatik çağrılır; ayrıca siteye resim eklemeniz gerekmez.
+F4F Console Valorant topluluğu için GitHub Pages + Supabase sitesi.
 
-**Bu paket henüz doğrudan canlıya yüklenmeye hazır nihai sürüm değildir.** Mevcut Supabase şeması kontrol edilmeli; e-posta tabanlı giriş, klan üyelerine yönetici tarafından verilen kullanıcı adı/şifre modeline göre değiştirilmelidir. SQL'i kontrol etmeden çalıştırmayın.
-
-Kurulum sırası için `KURULUM_TR.md` dosyasını okuyun.
+**Kurulum için:** `KURULUM_TR.md` dosyasını izleyin. Veritabanı SQL'i ve oyuncu hesabı Edge Function'ı kurulmadan tüm özellikler canlı olarak çalışmaz.
