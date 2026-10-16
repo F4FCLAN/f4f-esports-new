@@ -33,12 +33,12 @@
   <form id="changePasswordForm">
     <div class="field">
       <label for="newPlayerPassword">Yeni şifre</label>
-      <input id="newPlayerPassword" type="password" minlength="10" required autocomplete="new-password">
+      <input id="newPlayerPassword" type="password" minlength="6" required autocomplete="new-password">
     </div>
 
     <div class="field">
       <label for="confirmPlayerPassword">Yeni şifre (tekrar)</label>
-      <input id="confirmPlayerPassword" type="password" minlength="10" required autocomplete="new-password">
+      <input id="confirmPlayerPassword" type="password" minlength="6" required autocomplete="new-password">
     </div>
 
     <button class="btn" type="submit">Şifremi değiştir</button>
@@ -102,7 +102,7 @@ $('changePasswordForm').addEventListener('submit', async e => {
   const password = $('newPlayerPassword').value;
   const confirm = $('confirmPlayerPassword').value;
 
-  if (password.length < 10) {
+  if (password.length < 6) {
     toast('Şifre en az 10 karakter olmalı.');
     return;
   }
