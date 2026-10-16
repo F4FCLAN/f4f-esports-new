@@ -66,6 +66,115 @@ async function renderAdminApps(){const {data,error}=await db.from('join_applicat
 $('resultForm').addEventListener('submit',async e=>{e.preventDefault();const {error}=await db.from('matches').insert({opponent:$('resultOpponent').value.trim(),score:$('resultScore').value.trim(),match_date:$('resultDate').value,result:$('resultOutcome').value});if(error){toast('Sonuç kaydedilemedi: '+error.message);return}$('resultForm').reset();await loadHistory();toast('Maç sonucu kaydedildi.')});
 $('playerLoginForm').addEventListener('submit',async e=>{e.preventDefault();const username=$('playerUsername').value.trim().toLowerCase();const email=`${username}@players.f4f.local`;const {error}=await db.auth.signInWithPassword({email,password:$('playerPassword').value});if(error){toast('Giriş başarısız. Kullanıcı adı ve şifreyi kontrol et.');return}const {data:{user}}=await db.auth.getUser();const {data:profile,error:pe}=await db.from('player_profiles').select('*').eq('user_id',user.id).maybeSingle();if(pe||!profile){await db.auth.signOut();toast('Bu hesaba oyuncu profili bağlanmamış. Yöneticiyle görüş.');return}currentPlayer={user,profile};const {data:player}=await db.from('players').select('*').eq('id',profile.player_id).maybeSingle();currentPlayer.player=player;$('playerLoginPanel').classList.add('hidden');$('publicProfile').classList.add('hidden');$('playerEditor').classList.remove('hidden');$('playerIdentity').textContent=`${player.nick} · ${player.rank}`;$('editNick').value=player.nick;$('editRank').value=player.rank;$('editBio').value=profile.bio||'';$('editTikTok').value=profile.tiktok_url||'';$('editShowStats').checked=profile.show_stats!==false;$('editWin').value=profile.win_rate??'';$('editHs').value=profile.headshot_pct??'';$('editKd').value=profile.kd??'';$('editAcs').value=profile.acs??'';toast('Oyuncu girişi başarılı.')});
 $('playerLogout').addEventListener('click',async()=>{await db.auth.signOut();currentPlayer=null;$('playerEditor').classList.add('hidden');$('playerLoginPanel').classList.remove('hidden')});
-$('profileForm').addEventListener('submit',async e=>{e.preventDefault();if(!currentPlayer)return;const nick=$('editNick').value.trim(),rank=$('editRank').value,tiktok=$('editTikTok').value.trim();if(tiktok&&!validTikTok(tiktok)){toast('Geçerli TikTok HTTPS bağlantısı gir.');return}let avatar_url=currentPlayer.profile.avatar_url||null;const file=$('editAvatar').files[0];if(file){if(!file.type.startsWith('image/')){toast('Görsel dosyası seç.');return}const path=`profiles/${currentPlayer.user.id}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;const {error:up}=await db.storage.from('player-avatars').upload(path,file,{upsert:true,contentType:file.type});if(up){toast('Fotoğraf yüklenemedi: '+up.message);return}avatar_url=db.storage.from('player-avatars').getPublicUrl(path).data.publicUrl}const num=id=>$(id).value===''?null:Number($(id).value);const patch={bio:$('editBio').value.trim(),tiktok_url:tiktok||null,show_stats:$('editShowStats').checked,win_rate:num('editWin'),headshot_pct:num('editHs'),kd:num('editKd'),acs:num('editAcs'),avatar_url};const {error:pe}=await db.from('player_profiles').update(patch).eq('user_id',currentPlayer.user.id);if(pe){toast('Profil kaydedilemedi: '+pe.message);return}const {error:pl}=await db.from('players').update({nick,rank,avatar_url}).eq('id',currentPlayer.profile.player_id);if(pl){toast('Profil detayları kaydedildi ancak nick/rank güncellenemedi: '+pl.message);return}currentPlayer.profile={...currentPlayer.profile,...patch};currentPlayer.player={...currentPlayer.player,nick,rank,avatar_url};$('playerIdentity').textContent=`${nick} · ${rank}`;await loadPlayers();toast('Profilin kaydedildi.')});
+
+$('profileForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!currentPlayer) return;
+
+  const nick = $('editNick').value.trim();
+  const rank = $('editRank').value;
+  const tiktok = $('editTikTok').value.trim();
+
+  if (tiktok && !validTikTok(tiktok)) {
+    toast('Geçerli TikTok HTTPS bağlantısı gir.');
+    return;
+  }
+
+  let avatar_url = currentPlayer.player?.avatar_url
+    || currentPlayer.profile.avatar_url
+    || null;
+
+  const file = $('editAvatar').files[0];
+
+  if (file) {
+    if (!file.type.startsWith('image/')) {
+      toast('Görsel dosyası seç.');
+      return;
+    }
+
+    const path =
+      `profiles/${currentPlayer.user.id}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+
+    const { data: uploaded, error: uploadError } =
+      await db.storage.from('player-avatars').upload(
+        path,
+        file,
+        { upsert: false, contentType: file.type }
+      );
+
+    if (uploadError) {
+      toast('Fotoğraf yüklenemedi: ' + uploadError.message);
+      return;
+    }
+
+    if (!uploaded?.path) {
+      toast('Fotoğraf yüklendi bilgisi doğrulanamadı.');
+      return;
+    }
+
+    const { data: publicData } =
+      db.storage.from('player-avatars').getPublicUrl(uploaded.path);
+
+    avatar_url = publicData?.publicUrl;
+
+    if (!avatar_url) {
+      toast('Fotoğrafın adresi alınamadı.');
+      return;
+    }
+  }
+
+  const num = id =>
+    $(id).value === '' ? null : Number($(id).value);
+
+  const patch = {
+    bio: $('editBio').value.trim(),
+    tiktok_url: tiktok || null,
+    show_stats: $('editShowStats').checked,
+    win_rate: num('editWin'),
+    headshot_pct: num('editHs'),
+    kd: num('editKd'),
+    acs: num('editAcs'),
+    avatar_url
+  };
+
+  const { error: profileError } = await db
+    .from('player_profiles')
+    .update(patch)
+    .eq('user_id', currentPlayer.user.id);
+
+  if (profileError) {
+    toast('Profil kaydedilemedi: ' + profileError.message);
+    return;
+  }
+
+  const { data: updatedPlayer, error: playerError } = await db
+    .from('players')
+    .update({ nick, rank, avatar_url })
+    .eq('id', currentPlayer.profile.player_id)
+    .select('id,nick,rank,avatar_url,active,sort_order')
+    .maybeSingle();
+
+  if (playerError || !updatedPlayer) {
+    toast(
+      'Profil bilgileri kaydedildi ancak ana sayfa güncellenemedi: '
+      + (playerError?.message || 'Oyuncu kaydı güncellenemedi.')
+    );
+    return;
+  }
+
+  currentPlayer.profile = {
+    ...currentPlayer.profile,
+    ...patch
+  };
+
+  currentPlayer.player = updatedPlayer;
+
+  $('playerIdentity').textContent = `${nick} · ${rank}`;
+  $('editAvatar').value = '';
+
+  await loadPlayers();
+
+  toast('Profil ve fotoğraf kaydedildi.');
+});
 (async function init(){try{await Promise.all([loadPlayers(),loadHistory(),loadCountdown()]);}catch(e){console.error(e)}})();
 </script></body></html>
