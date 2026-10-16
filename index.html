@@ -25,10 +25,11 @@
 <section class="section" id="player-login"><div class="section-head"><div><div class="eyebrow">PLAYER ACCESS</div><h2>Oyuncu girişi ve profilim</h2><p class="muted">Hesapları yalnızca yönetici oluşturur. Oyuncu yalnızca kendi profilini düzenleyebilir.</p></div></div><div id="playerLoginPanel" class="panel"><form id="playerLoginForm"><div class="formgrid"><div class="field"><label for="playerUsername">Kullanıcı adı</label><input id="playerUsername" required autocomplete="username"></div><div class="field"><label for="playerPassword">Şifre</label><input id="playerPassword" type="password" required autocomplete="current-password"></div></div><button class="btn primary" type="submit">Giriş yap</button></form></div><div id="playerEditor" class="panel hidden"><div class="actions"><strong id="playerIdentity"></strong><button class="btn small" id="playerLogout">Çıkış yap</button></div><form id="profileForm" style="margin-top:18px"><div class="formgrid"><div class="field"><label for="editNick">Oyun nicki</label><input id="editNick" required maxlength="40"></div><div class="field"><label for="editRank">Rank</label><select id="editRank"><option>Diamond</option><option>Ascendant</option><option>Immortal</option><option>Radiant</option></select></div></div><div class="field"><label for="editAvatar">Profil fotoğrafı</label><input id="editAvatar" type="file" accept="image/*"></div><div class="field"><label for="editBio">Kendini tanıt</label><textarea id="editBio" maxlength="600"></textarea></div><div class="field"><label for="editTikTok">TikTok bağlantısı (boş bırakırsan kaldırılır)</label><input id="editTikTok" type="url" placeholder="https://www.tiktok.com/@kullaniciadi"></div><label class="hint"><input id="editShowStats" type="checkbox" checked> İstatistikler profilimde görünsün</label><div class="formgrid" style="margin-top:12px"><div class="field"><label for="editWin">Win Rate (%)</label><input id="editWin" type="number" min="0" max="100" step="0.1"></div><div class="field"><label for="editHs">Headshot (%)</label><input id="editHs" type="number" min="0" max="100" step="0.1"></div><div class="field"><label for="editKd">K/D</label><input id="editKd" type="number" min="0" max="10" step="0.01"></div><div class="field"><label for="editAcs">ACS</label><input id="editAcs" type="number" min="0" max="2000" step="1"></div></div><button class="btn primary" type="submit">Profilimi kaydet</button>
 </form>
 
+
 <!-- ŞİFRE DEĞİŞTİRME BÖLÜMÜ -->
-<div class="panel" style="margin-top:14px">
+<div class="panel hidden" id="changePasswordPanel" style="margin-top:14px">
   <h3>Şifre değiştir</h3>
-  <p class="hint">Yeni şifren en az 10 karakter olmalı.</p>
+  <p class="hint">Yeni şifren en az 6 karakter olmalı.</p>
 
   <form id="changePasswordForm">
     <div class="field">
@@ -89,8 +90,75 @@ $('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();if
 async function renderAdminRequests(){const {data,error}=await db.from('match_requests').select('*').order('created_at',{ascending:false});if(error){$('adminRequests').textContent=error.message;return}$('adminRequests').innerHTML=data?.length?`<table><thead><tr><th>Klan / iletişim</th><th>Ranklar</th><th>Maç zamanı</th><th>Durum / işlem</th></tr></thead><tbody>${data.map(m=>`<tr><td><b>${safe(m.rival_clan)}</b><br>${safe(m.contact)}<br><span class="hint">${safe(m.tracking_code)}</span></td><td>${safe(m.rank_one)} + ${safe(m.rank_two)}</td><td>${safe(m.match_date)} · ${safe(m.match_time||'')}</td><td>${safe(m.status)}<br>${m.status==='pending'?`<button class="btn small primary" data-match-status="approved" data-id="${m.id}">Onayla</button> <button class="btn small" data-match-status="rejected" data-id="${m.id}">Reddet</button>`:''}</td></tr>`).join('')}</tbody></table>`:'Henüz maç talebi yok.';document.querySelectorAll('[data-match-status]').forEach(b=>b.addEventListener('click',async()=>{const {error}=await db.from('match_requests').update({status:b.dataset.matchStatus}).eq('id',b.dataset.id);if(error){toast('Durum değiştirilemedi: '+error.message);return}await refreshAdmin();toast('Maç talebi güncellendi.') }))}
 async function renderAdminApps(){const {data,error}=await db.from('join_applications').select('*').order('created_at',{ascending:false});if(error){$('adminApplications').textContent=error.message;return}$('adminApplications').innerHTML=data?.length?`<table><thead><tr><th>Oyuncu</th><th>Yaş / rank</th><th>Tanıtım</th><th>Durum / işlem</th></tr></thead><tbody>${data.map(a=>`<tr><td><b>${safe(a.game_nick)}</b><br>${safe(a.full_name)}<br><span class="hint">${safe(a.tracking_code)}</span></td><td>${safe(a.age)} · ${safe(a.rank)}</td><td>${safe(a.introduction||'—')}</td><td>${safe(a.status)}<br>${a.status==='pending'?`<button class="btn small primary" data-app-status="approved" data-id="${a.id}">Onayla</button> <button class="btn small" data-app-status="rejected" data-id="${a.id}">Reddet</button>`:''}</td></tr>`).join('')}</tbody></table>`:'Henüz başvuru yok.';document.querySelectorAll('[data-app-status]').forEach(b=>b.addEventListener('click',async()=>{const {error}=await db.from('join_applications').update({status:b.dataset.appStatus}).eq('id',b.dataset.id);if(error){toast('Başvuru güncellenemedi: '+error.message);return}await renderAdminApps();toast('Başvuru durumu güncellendi.') }))}
 $('resultForm').addEventListener('submit',async e=>{e.preventDefault();const {error}=await db.from('matches').insert({opponent:$('resultOpponent').value.trim(),score:$('resultScore').value.trim(),match_date:$('resultDate').value,result:$('resultOutcome').value});if(error){toast('Sonuç kaydedilemedi: '+error.message);return}$('resultForm').reset();await loadHistory();toast('Maç sonucu kaydedildi.')});
-$('playerLoginForm').addEventListener('submit',async e=>{e.preventDefault();const username=$('playerUsername').value.trim().toLowerCase();const email=`${username}@players.f4f.local`;const {error}=await db.auth.signInWithPassword({email,password:$('playerPassword').value});if(error){toast('Giriş başarısız. Kullanıcı adı ve şifreyi kontrol et.');return}const {data:{user}}=await db.auth.getUser();const {data:profile,error:pe}=await db.from('player_profiles').select('*').eq('user_id',user.id).maybeSingle();if(pe||!profile){await db.auth.signOut();toast('Bu hesaba oyuncu profili bağlanmamış. Yöneticiyle görüş.');return}currentPlayer={user,profile};const {data:player}=await db.from('players').select('*').eq('id',profile.player_id).maybeSingle();currentPlayer.player=player;$('playerLoginPanel').classList.add('hidden');$('publicProfile').classList.add('hidden');$('playerEditor').classList.remove('hidden');$('playerIdentity').textContent=`${player.nick} · ${player.rank}`;$('editNick').value=player.nick;$('editRank').value=player.rank;$('editBio').value=profile.bio||'';$('editTikTok').value=profile.tiktok_url||'';$('editShowStats').checked=profile.show_stats!==false;$('editWin').value=profile.win_rate??'';$('editHs').value=profile.headshot_pct??'';$('editKd').value=profile.kd??'';$('editAcs').value=profile.acs??'';toast('Oyuncu girişi başarılı.')});
 
+$('playerLoginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const username = $('playerUsername').value.trim().toLowerCase();
+  const email = `${username}@players.f4f.local`;
+
+  const { error } = await db.auth.signInWithPassword({
+    email,
+    password: $('playerPassword').value
+  });
+
+  if (error) {
+    toast('Giriş başarısız. Kullanıcı adı ve şifreyi kontrol et.');
+    return;
+  }
+
+  const { data: { user } } = await db.auth.getUser();
+
+  const { data: profile, error: pe } = await db
+    .from('player_profiles')
+    .select('*')
+    .eq('user_id', user.id)
+    .maybeSingle();
+
+  if (pe || !profile) {
+    await db.auth.signOut();
+    toast('Bu hesaba oyuncu profili bağlanmamış. Yöneticiyle görüş.');
+    return;
+  }
+
+  currentPlayer = { user, profile };
+
+  const { data: player } = await db
+    .from('players')
+    .select('*')
+    .eq('id', profile.player_id)
+    .maybeSingle();
+
+  if (!player) {
+    await db.auth.signOut();
+    currentPlayer = null;
+    toast('Oyuncu kaydı bulunamadı.');
+    return;
+  }
+
+  currentPlayer.player = player;
+
+  $('playerLoginPanel').classList.add('hidden');
+  $('publicProfile').classList.add('hidden');
+  $('playerEditor').classList.remove('hidden');
+
+  // Şifre değiştirme panelini girişten sonra göster
+  $('changePasswordPanel').classList.remove('hidden');
+
+  $('playerIdentity').textContent = `${player.nick} · ${player.rank}`;
+  $('editNick').value = player.nick;
+  $('editRank').value = player.rank;
+  $('editBio').value = profile.bio || '';
+  $('editTikTok').value = profile.tiktok_url || '';
+  $('editShowStats').checked = profile.show_stats !== false;
+  $('editWin').value = profile.win_rate ?? '';
+  $('editHs').value = profile.headshot_pct ?? '';
+  $('editKd').value = profile.kd ?? '';
+  $('editAcs').value = profile.acs ?? '';
+
+  toast('Oyuncu girişi başarılı.');
+});
+$('changePasswordPanel').classList.remove('hidden');
 $('changePasswordForm').addEventListener('submit', async e => {
   e.preventDefault();
 
