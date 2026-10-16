@@ -16,7 +16,35 @@
 <main class="wrap">
 <section id="home" class="hero"><div><div class="eyebrow">PLAYSTATION 5 · CONSOLE VALORANT</div><h1>FIGHT FOR<br><span>FREEDOM.</span></h1><p class="lead">F4F Esports'un resmi merkezi. Kadromuzu keşfet, maç geçmişini incele, takımımıza katıl veya F4F ile karşılaşma talebi oluştur.</p><div class="actions"><button class="btn primary" data-section="request">Maç talebi oluştur ↗</button><button class="btn" data-section="join">Takıma katıl ↗</button></div><p class="muted" style="margin-top:22px">Family · Loyalty · Victory — F4FCLAN</p></div><div class="hero-art"><img src="assets/f4f-logo-transparent.png" alt="F4F Fight For Freedom"></div></section>
 <section class="section" id="countdownSection"><div class="section-head"><div><div class="eyebrow">NEXT MATCH</div><h2>Bir sonraki onaylı maç</h2><p class="muted" id="countdownSummary">Onaylanmış maç aranıyor…</p></div><span class="pill" id="countdownStatus">Canlı sayaç</span></div><div class="panel"><div id="countdownOpponent" style="font-size:20px;font-weight:900">Maç bilgisi yükleniyor</div><div class="countdown"><div class="timebox"><b id="cdDays">—</b><span class="hint">Gün</span></div><div class="timebox"><b id="cdHours">—</b><span class="hint">Saat</span></div><div class="timebox"><b id="cdMinutes">—</b><span class="hint">Dakika</span></div><div class="timebox"><b id="cdSeconds">—</b><span class="hint">Saniye</span></div></div></div></section>
-<section class="section" id="about"><div class="section-head"><div><div class="eyebrow">WHO WE ARE</div><h2>Hakkımızda</h2></div></div><div class="panel"><h3>Fight For Freedom</h3><p class="muted">F4F, PlayStation 5 üzerinde Console Valorant için rekabetçi takım oyunu, disiplin ve takım ruhunu merkeze alan bir espor topluluğudur. Amacımız oyuncularımızı geliştirmek, düzenli takım maçları yapmak ve topluluğumuzu saygılı, güvenilir bir ortamda büyütmektir.</p><p class="muted">Klan ilkelerimiz: takım arkadaşına saygı, iletişim, istikrar ve birlikte gelişim.</p><div class="actions"><a class="btn primary" href="https://www.tiktok.com/@f4fclan" target="_blank" rel="noopener noreferrer">TikTok hesabımız ↗</a><button class="btn" data-section="join">Başvuru yap</button></div></div></section>
+
+<section class="section" id="countdownSection">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">NEXT MATCH</div>
+      <h2>Bir sonraki onaylı maç</h2>
+      <p class="muted" id="countdownSummary">Onaylanmış maç aranıyor…</p>
+    </div>
+    <span class="pill" id="countdownStatus">Canlı sayaç</span>
+  </div>
+
+  <div class="panel">
+    <div id="countdownOpponent" style="font-size:20px;font-weight:900">Maç bilgisi yükleniyor</div>
+    <div class="countdown">
+      <div class="timebox"><b id="cdDays">—</b><span class="hint">Gün</span></div>
+      <div class="timebox"><b id="cdHours">—</b><span class="hint">Saat</span></div>
+      <div class="timebox"><b id="cdMinutes">—</b><span class="hint">Dakika</span></div>
+      <div class="timebox"><b id="cdSeconds">—</b><span class="hint">Saniye</span></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <h3>📅 Sıradaki onaylı maçlar</h3>
+    <p class="muted">Onaylanan diğer maçlar tarih ve saat sırasıyla burada görünür.</p>
+    <div id="upcomingMatches">Maç takvimi yükleniyor…</div>
+  </div>
+</section>
+
+  <section class="section" id="about"><div class="section-head"><div><div class="eyebrow">WHO WE ARE</div><h2>Hakkımızda</h2></div></div><div class="panel"><h3>Fight For Freedom</h3><p class="muted">F4F, PlayStation 5 üzerinde Console Valorant için rekabetçi takım oyunu, disiplin ve takım ruhunu merkeze alan bir espor topluluğudur. Amacımız oyuncularımızı geliştirmek, düzenli takım maçları yapmak ve topluluğumuzu saygılı, güvenilir bir ortamda büyütmektir.</p><p class="muted">Klan ilkelerimiz: takım arkadaşına saygı, iletişim, istikrar ve birlikte gelişim.</p><div class="actions"><a class="btn primary" href="https://www.tiktok.com/@f4fclan" target="_blank" rel="noopener noreferrer">TikTok hesabımız ↗</a><button class="btn" data-section="join">Başvuru yap</button></div></div></section>
 <section class="section" id="players"><div class="section-head"><div><div class="eyebrow">ROSTER</div><h2>Oyuncu kadrosu</h2><p class="muted">Bir oyuncuya tıklayarak profilini ve TikTok bağlantısını görüntüle.</p></div><span class="pill" id="playerCount">Yükleniyor…</span></div><div class="grid" id="playerGrid"><div class="panel">Oyuncular yükleniyor…</div></div></section>
 <section class="section" id="matches"><div class="section-head"><div><div class="eyebrow">MATCH HISTORY</div><h2>Maç geçmişi</h2><p class="muted">Tamamlanan karşılaşmalar ve skorlar.</p></div></div><div class="panel tablewrap" id="matchHistory">Maç geçmişi yükleniyor…</div></section>
 <section class="section" id="request"><div class="section-head"><div><div class="eyebrow">CHALLENGE F4F</div><h2>Maç talebi</h2><p class="muted">Talebin yönetici onayına gönderilir. Takip kodunu sakla.</p></div></div><div class="panel"><form id="matchForm"><div class="formgrid"><div class="field"><label for="rival">Rakip klan adı *</label><input id="rival" required maxlength="60"></div><div class="field"><label for="contact">İletişim (TikTok veya e-posta) *</label><input id="contact" required maxlength="120" placeholder="@kullanici veya e-posta"></div><div class="field"><label for="matchDate">Tercih edilen tarih *</label><input id="matchDate" type="date" required></div><div class="field"><label for="matchTime">Saat *</label><select id="matchTime" required><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></div></div><div class="field"><label>İstenen ranklar (tam 2 seçim) *</label><div class="rankchecks" id="rankChecks"></div></div><div class="field"><label for="matchNote">Ek bilgi (isteğe bağlı)</label><textarea id="matchNote" maxlength="500"></textarea></div><button class="btn primary" type="submit">Maç talebini gönder</button></form><div id="matchResult" aria-live="polite"></div></div></section>
@@ -74,7 +102,63 @@ async function openPublicProfile(id){$('profileModalBody').innerHTML='Profil yü
 function validTikTok(v){if(!v)return '';try{const u=new URL(v);return u.protocol==='https:'&&/(^|\.)tiktok\.com$/i.test(u.hostname)?u.href:''}catch{return ''}}
 $('closeProfile').addEventListener('click',()=>$('profileModal').classList.add('hidden'));$('profileModal').addEventListener('click',e=>{if(e.target===$('profileModal'))$('profileModal').classList.add('hidden')});
 async function loadHistory(){const {data,error}=await db.from('matches').select('id,opponent,score,match_date,result').order('match_date',{ascending:false});if(error){$('matchHistory').textContent='Maç geçmişi yüklenemedi. SQL kurulumunu kontrol edin.';return}$('matchHistory').innerHTML=data?.length?`<table><thead><tr><th>Tarih</th><th>Rakip</th><th>Skor</th><th>Sonuç</th></tr></thead><tbody>${data.map(m=>`<tr><td>${safe(m.match_date)}</td><td>${safe(m.opponent)}</td><td><b>${safe(m.score)}</b></td><td>${safe(m.result)}</td></tr>`).join('')}</tbody></table>`:'Henüz maç sonucu eklenmemiş.'}
-async function loadCountdown(){const {data,error}=await db.from('match_requests').select('rival_clan,match_date,match_time,status').eq('status','approved').gte('match_date',new Date().toISOString().slice(0,10)).order('match_date',{ascending:true}).limit(20);if(error){$('countdownOpponent').textContent='Maç sayacı için veritabanı bağlantısı kontrol edilmeli.';return}const now=Date.now();approvedMatch=(data||[]).map(m=>({...m,ts:new Date(`${m.match_date}T${m.match_time||'20:00'}:00+03:00`).getTime()})).filter(m=>m.ts>now).sort((a,b)=>a.ts-b.ts)[0]||null;if(!approvedMatch){$('countdownOpponent').textContent='Henüz yaklaşan onaylı maç yok';$('countdownSummary').textContent='Yönetici bir maç talebini onayladığında sayaç burada görünecek.';['cdDays','cdHours','cdMinutes','cdSeconds'].forEach(id=>$(id).textContent='—');return}$('countdownOpponent').textContent=`F4F vs ${approvedMatch.rival_clan}`;$('countdownSummary').textContent=`${approvedMatch.match_date} · ${approvedMatch.match_time||'Saat belirtilmedi'} (Türkiye saati)`;tickCountdown()}
+
+async function loadCountdown() {
+  const { data, error } = await db
+    .from('match_requests')
+    .select('id,rival_clan,match_date,match_time,status')
+    .eq('status', 'approved')
+    .gte('match_date', new Date().toISOString().slice(0, 10))
+    .order('match_date', { ascending: true })
+    .order('match_time', { ascending: true });
+
+  if (error) {
+    $('countdownOpponent').textContent = 'Maç bilgileri yüklenemedi.';
+    $('upcomingMatches').textContent = error.message;
+    return;
+  }
+
+  const now = Date.now();
+
+  const upcoming = (data || [])
+    .map(m => ({
+      ...m,
+      ts: new Date(
+        `${m.match_date}T${m.match_time || '20:00'}:00+03:00`
+      ).getTime()
+    }))
+    .filter(m => m.ts > now)
+    .sort((a, b) => a.ts - b.ts);
+
+  approvedMatch = upcoming[0] || null;
+
+  if (!approvedMatch) {
+    $('countdownOpponent').textContent = 'Yaklaşan onaylı maç yok';
+    $('countdownSummary').textContent =
+      'Yönetici bir maçı onayladığında sayaç burada görünecek.';
+    ['cdDays', 'cdHours', 'cdMinutes', 'cdSeconds']
+      .forEach(id => $(id).textContent = '—');
+  } else {
+    $('countdownOpponent').textContent =
+      `F4F vs ${approvedMatch.rival_clan}`;
+    $('countdownSummary').textContent =
+      `${approvedMatch.match_date} · ${approvedMatch.match_time || '20:00'} (Türkiye saati)`;
+    tickCountdown();
+  }
+
+  $('upcomingMatches').innerHTML = upcoming.length
+    ? `<div class="tablewrap"><table>
+        <thead><tr><th>Tarih</th><th>Saat</th><th>Rakip klan</th></tr></thead>
+        <tbody>${upcoming.map(m => `
+          <tr>
+            <td>${safe(m.match_date)}</td>
+            <td>${safe(m.match_time || '20:00')}</td>
+            <td><b>F4F vs ${safe(m.rival_clan)}</b></td>
+          </tr>`).join('')}
+        </tbody>
+      </table></div>`
+    : '<p class="muted">Henüz yaklaşan onaylı maç bulunmuyor.</p>';
+}
 function tickCountdown(){if(!approvedMatch)return;let d=Math.max(0,approvedMatch.ts-Date.now());$('cdDays').textContent=Math.floor(d/86400000);$('cdHours').textContent=Math.floor(d%86400000/3600000);$('cdMinutes').textContent=Math.floor(d%3600000/60000);$('cdSeconds').textContent=Math.floor(d%60000/1000)}setInterval(tickCountdown,1000);
 $('matchForm').addEventListener('submit',async e=>{e.preventDefault();const picked=[...document.querySelectorAll('input[name="rankPick"]:checked')].map(x=>x.value);if(picked.length!==2){toast('Tam olarak iki rank seçmelisin.');return}const code='F4F-'+crypto.randomUUID().slice(0,8).toUpperCase();const {error}=await db.from('match_requests').insert({tracking_code:code,rival_clan:$('rival').value.trim(),contact:$('contact').value.trim(),rank_one:picked[0],rank_two:picked[1],match_date:$('matchDate').value,match_time:$('matchTime').value,note:$('matchNote').value.trim(),status:'pending'});if(error){toast('Maç talebi kaydedilemedi: '+error.message);return}$('matchForm').reset();$('matchResult').innerHTML=`<div class="notice good">Talebin alındı. Takip kodun: <b>${safe(code)}</b>. Bu kodu sakla.</div>`;toast('Maç talebi kaydedildi.')});
 $('joinForm').addEventListener('submit',async e=>{e.preventDefault();const code='F4F-'+crypto.randomUUID().slice(0,8).toUpperCase();const {error}=await db.from('join_applications').insert({tracking_code:code,game_nick:$('joinNick').value.trim(),full_name:$('joinName').value.trim(),age:Number($('joinAge').value),rank:$('joinRank').value,introduction:$('joinBio').value.trim(),status:'pending'});if(error){toast('Başvuru kaydedilemedi: '+error.message);return}$('joinForm').reset();$('joinResult').innerHTML=`<div class="notice good">Başvurun alındı. Takip kodun: <b>${safe(code)}</b>. Bu kodu sakla.</div>`;toast('Başvuru kaydedildi.')});
@@ -87,7 +171,76 @@ async function renderAdminPlayers(){const {data,error}=await db.from('players').
 function renderAccountPlayers(){const s=$('accountPlayer');if(!s)return;const current=s.value;s.innerHTML='<option value="">Oyuncu seç</option>'+players.map(p=>`<option value="${safe(p.id)}">${safe(p.nick)} · ${safe(p.rank)}</option>`).join('');if(current)s.value=current}
 $('addPlayerForm').addEventListener('submit',async e=>{e.preventDefault();if(!adminUser)return;const {error}=await db.from('players').insert({nick:$('newNick').value.trim(),rank:$('newRank').value,active:true,sort_order:players.length});if(error){toast('Oyuncu eklenemedi: '+error.message);return}$('addPlayerForm').reset();await refreshAdmin();toast('Oyuncu kadroya eklendi.')});
 $('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();if(!adminUser)return;const {data:{session}}=await db.auth.getSession();if(!session){toast('Yönetici oturumu bulunamadı.');return}const username=$('accountUsername').value.trim().toLowerCase();$('accountResult').innerHTML='<p class="hint">Hesap oluşturuluyor…</p>';try{const res=await fetch(`${SUPABASE_URL}/functions/v1/admin-create-player`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${session.access_token}`,'apikey':SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify({player_id:$('accountPlayer').value,username,password:$('accountPassword').value})});const out=await res.json();if(!res.ok)throw new Error(out.error||'Hesap oluşturulamadı');$('accountResult').innerHTML='<div class="notice good">Oyuncu hesabı oluşturuldu. Kullanıcı adını ve şifreyi oyuncuya özel olarak ilet.</div>';$('createAccountForm').reset()}catch(err){$('accountResult').innerHTML=`<div class="notice">${safe(err.message)}</div>`}});
-async function renderAdminRequests(){const {data,error}=await db.from('match_requests').select('*').order('created_at',{ascending:false});if(error){$('adminRequests').textContent=error.message;return}$('adminRequests').innerHTML=data?.length?`<table><thead><tr><th>Klan / iletişim</th><th>Ranklar</th><th>Maç zamanı</th><th>Durum / işlem</th></tr></thead><tbody>${data.map(m=>`<tr><td><b>${safe(m.rival_clan)}</b><br>${safe(m.contact)}<br><span class="hint">${safe(m.tracking_code)}</span></td><td>${safe(m.rank_one)} + ${safe(m.rank_two)}</td><td>${safe(m.match_date)} · ${safe(m.match_time||'')}</td><td>${safe(m.status)}<br>${m.status==='pending'?`<button class="btn small primary" data-match-status="approved" data-id="${m.id}">Onayla</button> <button class="btn small" data-match-status="rejected" data-id="${m.id}">Reddet</button>`:''}</td></tr>`).join('')}</tbody></table>`:'Henüz maç talebi yok.';document.querySelectorAll('[data-match-status]').forEach(b=>b.addEventListener('click',async()=>{const {error}=await db.from('match_requests').update({status:b.dataset.matchStatus}).eq('id',b.dataset.id);if(error){toast('Durum değiştirilemedi: '+error.message);return}await refreshAdmin();toast('Maç talebi güncellendi.') }))}
+
+async function renderAdminRequests() {
+  const { data, error } = await db
+    .from('match_requests')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    $('adminRequests').textContent = error.message;
+    return;
+  }
+
+  $('adminRequests').innerHTML = data?.length
+    ? `<table>
+        <thead><tr>
+          <th>Klan / iletişim</th>
+          <th>Ranklar</th>
+          <th>Maç zamanı</th>
+          <th>Durum / işlem</th>
+        </tr></thead>
+        <tbody>${data.map(m => `
+          <tr>
+            <td><b>${safe(m.rival_clan)}</b><br>
+              ${safe(m.contact)}<br>
+              <span class="hint">${safe(m.tracking_code)}</span>
+            </td>
+            <td>${safe(m.rank_one)} + ${safe(m.rank_two)}</td>
+            <td>${safe(m.match_date)} · ${safe(m.match_time || '')}</td>
+            <td>
+              ${safe(m.status)}<br>
+              ${m.status === 'pending' ? `
+                <button class="btn small primary"
+                  data-match-status="approved" data-id="${m.id}">Onayla</button>
+                <button class="btn small"
+                  data-match-status="rejected" data-id="${m.id}">Reddet</button>
+              ` : ''}
+              ${m.status === 'approved' ? `
+                <button class="btn small"
+                  data-match-status="cancelled" data-id="${m.id}">İptal et</button>
+              ` : ''}
+            </td>
+          </tr>`).join('')}
+        </tbody>
+      </table>`
+    : 'Henüz maç talebi yok.';
+
+  document.querySelectorAll('[data-match-status]').forEach(b =>
+    b.addEventListener('click', async () => {
+      const action = b.dataset.matchStatus;
+
+      if (action === 'cancelled' &&
+          !confirm('Bu onaylı maçı iptal etmek istediğine emin misin?')) {
+        return;
+      }
+
+      const { error } = await db
+        .from('match_requests')
+        .update({ status: action })
+        .eq('id', b.dataset.id);
+
+      if (error) {
+        toast('Maç durumu değiştirilemedi: ' + error.message);
+        return;
+      }
+
+      await refreshAdmin();
+      toast(action === 'cancelled' ? 'Maç iptal edildi.' : 'Maç durumu güncellendi.');
+    })
+  );
+}
 async function renderAdminApps(){const {data,error}=await db.from('join_applications').select('*').order('created_at',{ascending:false});if(error){$('adminApplications').textContent=error.message;return}$('adminApplications').innerHTML=data?.length?`<table><thead><tr><th>Oyuncu</th><th>Yaş / rank</th><th>Tanıtım</th><th>Durum / işlem</th></tr></thead><tbody>${data.map(a=>`<tr><td><b>${safe(a.game_nick)}</b><br>${safe(a.full_name)}<br><span class="hint">${safe(a.tracking_code)}</span></td><td>${safe(a.age)} · ${safe(a.rank)}</td><td>${safe(a.introduction||'—')}</td><td>${safe(a.status)}<br>${a.status==='pending'?`<button class="btn small primary" data-app-status="approved" data-id="${a.id}">Onayla</button> <button class="btn small" data-app-status="rejected" data-id="${a.id}">Reddet</button>`:''}</td></tr>`).join('')}</tbody></table>`:'Henüz başvuru yok.';document.querySelectorAll('[data-app-status]').forEach(b=>b.addEventListener('click',async()=>{const {error}=await db.from('join_applications').update({status:b.dataset.appStatus}).eq('id',b.dataset.id);if(error){toast('Başvuru güncellenemedi: '+error.message);return}await renderAdminApps();toast('Başvuru durumu güncellendi.') }))}
 $('resultForm').addEventListener('submit',async e=>{e.preventDefault();const {error}=await db.from('matches').insert({opponent:$('resultOpponent').value.trim(),score:$('resultScore').value.trim(),match_date:$('resultDate').value,result:$('resultOutcome').value});if(error){toast('Sonuç kaydedilemedi: '+error.message);return}$('resultForm').reset();await loadHistory();toast('Maç sonucu kaydedildi.')});
 
